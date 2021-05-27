@@ -1,7 +1,11 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app shrink-on-scroll class="d-flex justify-center text-center">
-      <v-toolbar-title class="display-1 pt-5"
+    <v-app-bar
+      app
+      shrink-on-scroll
+      class="d-flex justify-center text-center blue white--text"
+    >
+      <v-toolbar-title class="display-1"
         ><span class="subtitle-1">Made by Godfrey Necesario</span><br />
         Google Book API</v-toolbar-title
       >
@@ -18,17 +22,17 @@
             @click:append-outer="searchBook"
           ></v-text-field>
         </v-row>
-        <v-row cols="3" class="d-flex justify-center py-5">
+        <v-row cols="4" class="d-flex justify-center py-5">
           <v-card
             v-for="(book, index) in allBooks"
             :key="index"
             class="mx-2 my-3 align-start"
-            max-width="300"
-            min-width="300"
+            max-width="250"
+            min-width="250"
           >
             <v-img
               class="white--text align-end"
-              height="300px"
+              height="200px"
               :src="book.volumeInfo.imageLinks.thumbnail"
               alt="poster"
             ></v-img>
@@ -47,13 +51,13 @@
                       : "Unknown"
                   }}
                 </div>
-
-                <div class="text-truncate">
-                  {{
-                    book.volumeInfo.description
-                      ? book.volumeInfo.description
-                      : "No description attached"
-                  }}
+                <div class="caption">
+                  Page Count:
+                  {{ book.volumeInfo.pageCount }}
+                </div>
+                <div class="caption">
+                  Published Date:
+                  {{ new Date(book.volumeInfo.publishedDate).getFullYear() }}
                 </div>
               </v-card-text>
               <v-card-actions>
