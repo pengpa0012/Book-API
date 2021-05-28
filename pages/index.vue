@@ -12,63 +12,67 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        <v-row class="pt-10 px-4">
-          <v-text-field
-            v-model="inputValue"
-            solo
-            label="Search for books"
-            clearable
-            :append-outer-icon="'mdi-book-search'"
-            @click:append-outer="searchBook"
-          ></v-text-field>
+        <v-row class="pt-5">
+          <v-col xl="8" class="mx-auto">
+            <v-text-field
+              v-model="inputValue"
+              solo
+              label="Search for books"
+              clearable
+              :append-outer-icon="'mdi-book-search'"
+              @click:append-outer="searchBook"
+            ></v-text-field>
+          </v-col>
         </v-row>
-        <v-row cols="4" class="d-flex justify-center py-5">
-          <v-card
-            v-for="(book, index) in allBooks"
-            :key="index"
-            class="mx-2 my-3 align-start"
-            max-width="250"
-            min-width="250"
-          >
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              :src="book.volumeInfo.imageLinks.thumbnail"
-              alt="poster"
-            ></v-img>
-            <div class="d-flex flex-column align-stretch">
-              <v-card-title class="subtitle-2 pb-0 text-truncate">
-                <div class="text-truncate">
-                  {{ book.volumeInfo.title }}
-                </div>
-              </v-card-title>
-              <v-card-text class="text--primary">
-                <div class="caption">
-                  Publisher:
-                  {{
-                    book.volumeInfo.publisher
-                      ? book.volumeInfo.publisher
-                      : "Unknown"
-                  }}
-                </div>
-                <div class="caption">
-                  Page Count:
-                  {{ book.volumeInfo.pageCount }}
-                </div>
-                <div class="caption">
-                  Published Date:
-                  {{ new Date(book.volumeInfo.publishedDate).getFullYear() }}
-                </div>
-              </v-card-text>
-              <v-card-actions>
-                <a :href="book.volumeInfo.infoLink" target="_blank">
-                  <v-btn color="orange" text>
-                    Visit Book
-                  </v-btn>
-                </a>
-              </v-card-actions>
-            </div>
-          </v-card>
+        <v-row cols="4" class="py-5">
+          <v-col xl="8" class="d-flex justify-center flex-wrap mx-auto">
+            <v-card
+              v-for="(book, index) in allBooks"
+              :key="index"
+              class="mx-2 my-3 align-start"
+              max-width="250"
+              min-width="250"
+            >
+              <v-img
+                class="white--text align-end"
+                height="200px"
+                :src="book.volumeInfo.imageLinks.thumbnail"
+                alt="poster"
+              ></v-img>
+              <div class="d-flex flex-column align-stretch">
+                <v-card-title class="subtitle-2 pb-0 text-truncate">
+                  <div class="text-truncate">
+                    {{ book.volumeInfo.title }}
+                  </div>
+                </v-card-title>
+                <v-card-text class="text--primary">
+                  <div class="caption">
+                    Publisher:
+                    {{
+                      book.volumeInfo.publisher
+                        ? book.volumeInfo.publisher
+                        : "Unknown"
+                    }}
+                  </div>
+                  <div class="caption">
+                    Page Count:
+                    {{ book.volumeInfo.pageCount }}
+                  </div>
+                  <div class="caption">
+                    Published Date:
+                    {{ new Date(book.volumeInfo.publishedDate).getFullYear() }}
+                  </div>
+                </v-card-text>
+                <v-card-actions>
+                  <a :href="book.volumeInfo.infoLink" target="_blank">
+                    <v-btn color="orange" text>
+                      Visit Book
+                    </v-btn>
+                  </a>
+                </v-card-actions>
+              </div>
+            </v-card>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
