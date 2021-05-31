@@ -26,6 +26,12 @@
         </v-row>
         <v-row cols="4" class="py-5">
           <v-col xl="8" class="d-flex justify-center flex-wrap mx-auto">
+            <div class="lds-ellipsis loader" v-if="showLoader">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             <v-card
               v-for="(book, index) in allBooks"
               :key="index"
@@ -63,9 +69,9 @@
                     {{ new Date(book.volumeInfo.publishedDate).getFullYear() }}
                   </div>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions class="pl-4 pb-5">
                   <a :href="book.volumeInfo.infoLink" target="_blank">
-                    <v-btn color="orange" text>
+                    <v-btn depressed color="yellow darken-1">
                       Visit Book
                     </v-btn>
                   </a>
@@ -85,7 +91,8 @@ export default {
   data() {
     return {
       inputValue: "",
-      allBooks: []
+      allBooks: [],
+      showLoader: true
     };
   },
   methods: {
@@ -94,6 +101,7 @@ export default {
         alert("Type something");
         return;
       }
+      this.showLoader = true;
       this.allBooks = [];
 
       const key = "AIzaSyBOL4MIwcR42oZwTaRvN6BXjIB1Memp4zo";
@@ -103,6 +111,7 @@ export default {
       )
         .then(res => res.json())
         .then(data => {
+          this.showLoader = false;
           if (data.totalItems <= 0) {
             alert("try other keywords");
             this.inputValue = "";
@@ -124,6 +133,7 @@ export default {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=javascript&key=${key}`)
       .then(res => res.json())
       .then(data => {
+        this.showLoader = false;
         if (data.totalItems <= 0) {
           alert("try other keywords");
           this.inputValue = "";
@@ -137,3 +147,61 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #2196f3;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+</style>
